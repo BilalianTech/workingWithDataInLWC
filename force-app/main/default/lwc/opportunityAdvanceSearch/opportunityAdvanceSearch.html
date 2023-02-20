@@ -1,0 +1,77 @@
+<template>
+    <div class="c-container">
+        <lightning-card>
+            <lightning-layout multiple-rows="true">                
+
+                <lightning-layout-item size="4" style="padding-left: 15px;">
+                    <template lwc:if={stageOptions}>
+                        <div class="slds-var-m-around_medium">
+                            <lightning-combobox
+                                name="stageName"
+                                label="Stage"
+                                placeholder="Choose Type"
+                                value={stageValue}
+                                options={stageOptions} 
+                                onchange={stageChange}                                
+                            >
+                            </lightning-combobox>  
+                            <p>Selected option: {stageValue}</p>                           
+                        </div>
+                    </template>
+
+                </lightning-layout-item>
+
+                <lightning-layout-item size="4" style="padding-left: 15px;">
+                    <template lwc:if={oppTypeOptions}>
+                        <div class="slds-var-m-around_medium">
+                            <lightning-combobox
+                                name="opportunityType"
+                                label="Opportunity Type"
+                                placeholder="Choose Type"
+                                value={oppTypeValue}
+                                options={oppTypeOptions} 
+                                onchange={oppTypeChange}                                 
+                            >
+                            </lightning-combobox>  
+                            <p>Selected option: {oppTypeValue}</p>                          
+                        </div>
+                    </template>
+
+                </lightning-layout-item>
+
+                <lightning-layout-item size="8" style="padding-left: 30px">
+                    <lightning-button id="enterBtn"
+                        label="ENTER"
+                        onclick={enterSearchClicked}>
+                    </lightning-button>
+                </lightning-layout-item>
+      
+                <lightning-layout-item size="12" style="padding-left: 30px;">
+                    <template lwc:if={opportunities}>
+                        <template for:each={opportunities} for:item="opportunity">
+                            <p key={opportunity.Id}> Opportunity: {opportunity.StageName} {opportunity.Amount} </p>
+                        </template>
+                    </template>
+                </lightning-layout-item>
+
+
+            </lightning-layout>
+
+            
+
+                
+                
+
+            
+
+            <template if:true={errors}>
+                <p>{errors}</p>
+            </template>
+
+
+        </lightning-card>
+       
+
+    </div>
+</template>
+
