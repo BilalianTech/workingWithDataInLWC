@@ -118,13 +118,26 @@ export default class OpportunityAdvanceSearch extends LightningElement
         .then( result => {
             
             console.log('Test Start');
-
-
-
+            let curAccountObj = [];
             
-            this.opportunities = result;
+            for(let cResult of result)
+            {
+                curAccountObj.push({
+                    "Name" : cResult.Name,
+                    "AccountId": cResult.AccountId,
+                    "StageName": cResult.StageName,
+                    "Amount": cResult.Amount,
+                    "Type": cResult.Type,
+                    "CloseDate": cResult.CloseDate,
+                    "Id":cResult.Id,
+                    "AcctName":( cResult.Account ? cResult.Account.Name : null)
+                });
+            }
+
+            this.opportunities = curAccountObj;
             this.error = undefined;
 
+            console.log('Name: ' + JSON.stringify(curAccountObj)); 
             console.log('result: ' + JSON.stringify(this.opportunities));           
             //console.log('OPP PickList: ' + JSON.stringify(this.oppTypeOptions.values));
             //console.log('STAGE PickList: ' + JSON.stringify(this.stagePicklistValues.data.values));
