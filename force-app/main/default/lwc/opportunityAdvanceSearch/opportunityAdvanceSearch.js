@@ -137,7 +137,7 @@ export default class OpportunityAdvanceSearch extends LightningElement
             this.opportunities = curAccountObj;
             this.error = undefined;
 
-            console.log('Name: ' + JSON.stringify(curAccountObj)); 
+            //console.log('Name: ' + JSON.stringify(curAccountObj)); 
             console.log('result: ' + JSON.stringify(this.opportunities));           
             //console.log('OPP PickList: ' + JSON.stringify(this.oppTypeOptions.values));
             //console.log('STAGE PickList: ' + JSON.stringify(this.stagePicklistValues.data.values));
