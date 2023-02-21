@@ -1,5 +1,7 @@
+<!-- sldsValidatorIgnore -->
 <template>
     <div class="c-container">
+
         <lightning-card>
             <lightning-layout multiple-rows="true">                
 
@@ -48,37 +50,22 @@
       
                 <lightning-layout-item size="12" style="padding: 30px; ">
                     <template lwc:if={opportunities}>
+
+                       <!-- sldsValidatorIgnoreNextLine -->                        
                         <lightning-datatable
                             key-field="id"
                             data={opportunities}
+                            show-row-number-column
+                            row-number-offset={rowOffset}
+                            hide-checkbox-column
                             columns={columns}>
                         </lightning-datatable>
+
                     </template>
                 </lightning-layout-item>
-
-
-
-
-                
-
-
             </lightning-layout>
-
-            
-
-                
-                
-
-            
-
-            <template if:true={errors}>
-                <p>{errors}</p>
-            </template>
-
-
         </lightning-card>
-       
-
+        
     </div>
 </template>
 

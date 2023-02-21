@@ -1,7 +1,4 @@
 import { LightningElement, api, wire, track } from 'lwc';
-//import { reduceErrors } from 'c/ldsUtils';
-//import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-//import Opportunity from '@salesforce/schema/Opportunity';
 import { getPicklistValues } from 'lightning/uiObjectInfoApi';
 
 import STAGE_FIELD from '@salesforce/schema/Opportunity.StageName';
@@ -19,7 +16,7 @@ export default class OpportunityAdvanceSearch extends LightningElement
     error;   
     oppTypeOptions;
     stageOptions;
-    AcctName = 'Me'
+    rowOffset = 0;
 
     //TABLE COLUMS=============================================================
     columns = [
@@ -50,12 +47,10 @@ export default class OpportunityAdvanceSearch extends LightningElement
             //Get label and values---------------------------------------------
             for(let x of oppTypeArr)
             {
-                oppTypeHolder.push({'label' : x.label, 'value' : x.value});
-                //console.log("opportTypeOptions " + JSON.stringify(x.label) );
+                oppTypeHolder.push({'label' : x.label, 'value' : x.value});                
             }
             
             this.oppTypeOptions = oppTypeHolder; 
-            //console.log("opportTypeOptions " + JSON.stringify(this.oppTypeOptions) );
             this.error = undefined;
         }
         else if(error)
@@ -82,11 +77,9 @@ export default class OpportunityAdvanceSearch extends LightningElement
             for(let stage of stageArr)
             {
                 stageHolder.push({'label' : stage.label, 'value' : stage.value});
-                //console.log("stageOptions " + JSON.stringify(stage.label) );
             }
            
-            this.stageOptions = stageHolder;
-            //console.log("stageOptions " + JSON.stringify(this.stageOptions) );            
+            this.stageOptions = stageHolder;            
             this.error = undefined;
         }
         else if(error)
@@ -117,7 +110,7 @@ export default class OpportunityAdvanceSearch extends LightningElement
         getOpportunities({ searchObjStr: JSON.stringify(this.searchJSON)})
         .then( result => {
             
-            console.log('Test Start');
+            //console.log('Test Start');
             let curAccountObj = [];
             
             for(let cResult of result)
@@ -136,21 +129,11 @@ export default class OpportunityAdvanceSearch extends LightningElement
 
             this.opportunities = curAccountObj;
             this.error = undefined;
-
-            //console.log('Name: ' + JSON.stringify(curAccountObj)); 
-            console.log('result: ' + JSON.stringify(this.opportunities));           
-            //console.log('OPP PickList: ' + JSON.stringify(this.oppTypeOptions.values));
-            //console.log('STAGE PickList: ' + JSON.stringify(this.stagePicklistValues.data.values));
-           
-            console.log('Test End');
-
         })
         .catch((error)=>{
             this.error = error;
             console.log('Error: ' + this.error);
         });
-
-
        
     }
 
