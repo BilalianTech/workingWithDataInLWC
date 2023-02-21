@@ -34,16 +34,17 @@ public with sharing class SearchOpportController
             }       
 
             //Select Query-----------------------------------------------------
-            selectStr = 'SELECT Name, StageName, Amount, Type FROM opportunity ' + whereParts;
+            selectStr = 'SELECT Name, Account.Name , StageName, Amount, Type, CloseDate FROM opportunity ' + whereParts;
+            List<Opportunity> curOpportList = Database.query(selectStr);
 
             //Opportunity Holder---------------------------------------------
+            /*
             Opportunity cOpp = new Opportunity();
             cOpp.CloseDate = Date.parse('8/25/2014');
             cOpp.StageName = oppSearchObj.stage;
             cOpp.Type = oppSearchObj.oppType;
             cOpp.Amount = 230000.00;
             cOpp.Description = selectStr;
-
             currentOpps.add(cOpp);
 
             cOpp = new Opportunity();
@@ -52,20 +53,20 @@ public with sharing class SearchOpportController
             cOpp.Type = 'New Customer';
             cOpp.Amount = 260000.00;
             cOpp.Description = 'Free Free';
-
             currentOpps.add(cOpp);
+            */
 
-            return currentOpps;
+            return curOpportList;
         }
         catch(Exception ex)
         {
             System.debug('An Exception: ' + ex);
-            throw new AuraHandledException('An Exception: ' + ex);
-            
+            throw new AuraHandledException('An Exception: ' + ex);            
         }
               
     }
 
+    //Opportunity Search JSON CLASS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     public class OppSearchJSON
     {
         public String stage;

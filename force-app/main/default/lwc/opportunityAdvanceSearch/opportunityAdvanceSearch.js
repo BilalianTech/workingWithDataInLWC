@@ -10,6 +10,7 @@ import getOpportunities from '@salesforce/apex/SearchOpportController.getOpportu
 
 export default class OpportunityAdvanceSearch extends LightningElement 
 {
+    //MAIN VAR=================================================================
     @api serverMsg;
     @api searchJSON;
     opportunities;
@@ -18,6 +19,20 @@ export default class OpportunityAdvanceSearch extends LightningElement
     error;   
     oppTypeOptions;
     stageOptions;
+    AcctName = 'Me'
+
+    //TABLE COLUMS=============================================================
+    columns = [
+        { label: 'NAME', fieldName: 'Name' },
+        { label: 'ACCOUNT', fieldName: 'AcctName' },
+        { label: 'STAGE', fieldName: 'StageName' },
+        { label: 'AMOUNT', fieldName: 'Amount', type: 'currency' },
+        { label: 'CLOSED', fieldName: 'CloseDate', type: 'date' },
+        { label: 'TYPE', fieldName: 'Type' },
+        
+    ];
+
+    //PICKLISTVALUES===========================================================
 
     @wire(getPicklistValues, { recordTypeId: '012000000000000AAA', fieldApiName: OPP_TYPE_FIELD })
     oppTypePicklistValues({ error, data })
@@ -30,7 +45,7 @@ export default class OpportunityAdvanceSearch extends LightningElement
             const oppTypeArr = data.values;
 
             //Add Null Search Value--------------------------------------------
-            oppTypeHolder.push({'label' : '-----', 'value' : ''});
+            oppTypeHolder.push({'label' : '--ANY--', 'value' : ''});
 
             //Get label and values---------------------------------------------
             for(let x of oppTypeArr)
@@ -40,7 +55,7 @@ export default class OpportunityAdvanceSearch extends LightningElement
             }
             
             this.oppTypeOptions = oppTypeHolder; 
-            console.log("opportTypeOptions " + JSON.stringify(this.oppTypeOptions) );
+            //console.log("opportTypeOptions " + JSON.stringify(this.oppTypeOptions) );
             this.error = undefined;
         }
         else if(error)
@@ -61,7 +76,7 @@ export default class OpportunityAdvanceSearch extends LightningElement
             const stageArr = data.values;
 
             //Add Null Search Value--------------------------------------------
-            stageHolder.push({'label' : '-----', 'value' : ''});
+            stageHolder.push({'label' : '--ANY--', 'value' : ''});
 
             //Get label and values---------------------------------------------
             for(let stage of stageArr)
@@ -71,7 +86,7 @@ export default class OpportunityAdvanceSearch extends LightningElement
             }
            
             this.stageOptions = stageHolder;
-            console.log("stageOptions " + JSON.stringify(this.stageOptions) );            
+            //console.log("stageOptions " + JSON.stringify(this.stageOptions) );            
             this.error = undefined;
         }
         else if(error)
@@ -103,12 +118,14 @@ export default class OpportunityAdvanceSearch extends LightningElement
         .then( result => {
             
             console.log('Test Start');
+
+
+
             
             this.opportunities = result;
             this.error = undefined;
 
-            console.log('result: ' + JSON.stringify(this.opportunities));
-           
+            console.log('result: ' + JSON.stringify(this.opportunities));           
             //console.log('OPP PickList: ' + JSON.stringify(this.oppTypeOptions.values));
             //console.log('STAGE PickList: ' + JSON.stringify(this.stagePicklistValues.data.values));
            
